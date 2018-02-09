@@ -33,4 +33,9 @@ public class MyUI extends UI {
         setContent(layout);
     }
 
+    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+    public static class VaadinUiServlet extends VaadinServlet {
+
+    }
+
 }
