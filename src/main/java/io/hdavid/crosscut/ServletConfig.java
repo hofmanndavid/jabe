@@ -1,4 +1,4 @@
-package io.hdavid.config;
+package io.hdavid.crosscut;
 
 import io.hdavid.App;
 import io.hdavid.MessageServlet;
@@ -13,9 +13,11 @@ import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
 import io.undertow.servlet.api.ServletContainer;
 import io.undertow.servlet.handlers.DefaultServlet;
+import lombok.SneakyThrows;
 
 public class ServletConfig {
 
+    @SneakyThrows
     public static void configure() {
         DeploymentInfo servletBuilder = Servlets.deployment()
                 .setClassLoader(App.class.getClassLoader())

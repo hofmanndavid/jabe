@@ -1,8 +1,20 @@
 package io.hdavid.ui;
 
-import org.vaadin.teemusa.sidemenu.SideMenu;
+import com.vaadin.ui.*;
 
-public class MainUI extends SideMenu {
+import static net.hdavid.easylayout.L.*;
+
+public class LoginView extends VerticalLayout {
+
+    TextField username = new TextField("Username");
+    PasswordField password = new PasswordField("Password");
+    Button login = new Button("Password");
+
+    public LoginView() {
+
+
+        ve(this, _MARGIN, _EXPANDER, ve(username, password, login, Alignment.BOTTOM_RIGHT),_EXPANDER);
+    }
 
 
 

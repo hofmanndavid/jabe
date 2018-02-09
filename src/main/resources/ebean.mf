@@ -1,1 +1,1 @@
-packages: io.ingenia.gambling2.entity.query
+packages: io.hdavid.entity.query

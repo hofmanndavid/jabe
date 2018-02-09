@@ -1,18 +1,24 @@
-package io.hdavid.config;
+package io.hdavid.crosscut;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-public class DbPoolConfig {
+import javax.sql.DataSource;
 
+public class DbPool {
+    private static volatile HikariDataSource ds;
     public static void configure() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:h2:h2db"); //jdbc:h2:[file:][<path>]<databaseName>
-        config.setUsername("sa");
+        config.setJdbcUrl("jdbc:h2:c:/Users/hdavid/repos/jabe.h2db"); //jdbc:h2:[file:][<path>]<databaseName>
+        config.setUsername("sa"); // systemadmin?
         config.setPassword("sa");
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+//        config.addDataSourceProperty("", "");
 
-        HikariDataSource ds = new HikariDataSource(config);
+        ds = new HikariDataSource(config);
     }
+
+    public static DataSource getDs() {
+        return ds;
+    }
+
 }
