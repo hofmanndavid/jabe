@@ -18,8 +18,8 @@ public abstract class BasicEbeanEntity {
 
 
     @Transient
-    public boolean isNotPersiste() {
-        return id == null;
+    public boolean isPersisted() {
+        return id != null;
     }
 
     public void refresh() {

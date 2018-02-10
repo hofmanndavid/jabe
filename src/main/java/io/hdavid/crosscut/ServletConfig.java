@@ -28,16 +28,18 @@ public class ServletConfig {
                         Servlets.servlet("VaadinUiServlet", MyUI.VaadinUiServlet.class)
 //                                .addInitParam("vaadin.production", "false") // anotated in MuUI.java
                                 .setAsyncSupported(true)
-                                .addMapping("/ui/*")
+                                .addMapping("/admin/*")
                                 .addMapping("/VAADIN/*"),
                         Servlets.servlet("MessageServlet", MessageServlet.class)
                                 .addInitParam("message", "Hello World")
                                 .addMapping("/sayhi"),
                         Servlets.servlet("default", DefaultServlet.class)
-                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "true")
+                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "false")
                                 .addInitParam(DefaultServlet.DEFAULT_ALLOWED, "true")
                                 .addInitParam(DefaultServlet.ALLOW_POST, "false")
-                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true"))
+                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true")
+                )
+                .addWelcomePage("index.html")
                 ;
 
         servletBuilder.setResourceManager(new ClassPathResourceManager(App.class.getClassLoader(), "webstatic"));
