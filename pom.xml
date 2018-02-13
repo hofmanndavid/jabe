@@ -25,6 +25,19 @@
   <dependencies>
 
       <dependency>
+          <groupId>com.fizzed</groupId>
+          <artifactId>rocker-runtime</artifactId>
+          <version>0.23.0</version>
+      </dependency>
+      <!-- for hot-reloading support only during development, BUT we are going to use it in production? -->
+      <dependency>
+          <groupId>com.fizzed</groupId>
+          <artifactId>rocker-compiler</artifactId>
+          <version>0.23.0</version>
+          <scope>provided</scope>
+      </dependency>
+
+      <dependency>
           <groupId>com.zaxxer</groupId>
           <artifactId>HikariCP</artifactId>
           <version>2.7.6</version>

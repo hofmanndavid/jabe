@@ -49,12 +49,12 @@ public class ServletConfig {
         manager.deploy();
 
         HttpHandler start = manager.start();
-        PathHandler path = Handlers.path(Handlers.redirect("/"))
-                .addPrefixPath("/", start);
+//        PathHandler path = Handlers.path(Handlers.redirect("/")) // why do we need this?
+//                .addPrefixPath("/", start);
 
         Undertow server = Undertow.builder()
                 .addHttpListener(8080, "localhost")
-                .setHandler(path)
+                .setHandler(start)//path)
                 .setIoThreads(3)
                 .setWorkerThreads(3)
                 .build();
