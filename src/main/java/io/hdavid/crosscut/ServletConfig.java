@@ -28,7 +28,7 @@ public class ServletConfig {
                         Servlets.servlet("VaadinUiServlet", MyUI.VaadinUiServlet.class)
 //                                .addInitParam("vaadin.production", "false") // anotated in MuUI.java
                                 .setAsyncSupported(true)
-                                .addMapping("/ui/*")
+                                .addMapping("/admin/*")
                                 .addMapping("/VAADIN/*"),
                         Servlets.servlet("MessageServlet", MessageServlet.class)
                                 .addInitParam("message", "Hello World")
@@ -53,6 +53,8 @@ public class ServletConfig {
         Undertow server = Undertow.builder()
                 .addHttpListener(8080, "localhost")
                 .setHandler(path)
+                .setIoThreads(3)
+                .setWorkerThreads(3)
                 .build();
         server.start();
     }

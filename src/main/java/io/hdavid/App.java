@@ -1,6 +1,5 @@
 package io.hdavid;
 
-import io.ebean.Ebean;
 import io.hdavid.crosscut.DbPool;
 import io.hdavid.crosscut.EBeanConfig;
 import io.hdavid.crosscut.ServletConfig;
