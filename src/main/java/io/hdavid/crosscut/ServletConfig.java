@@ -34,10 +34,12 @@ public class ServletConfig {
                                 .addInitParam("message", "Hello World")
                                 .addMapping("/sayhi"),
                         Servlets.servlet("default", DefaultServlet.class)
-                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "true")
+                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "false")
                                 .addInitParam(DefaultServlet.DEFAULT_ALLOWED, "true")
                                 .addInitParam(DefaultServlet.ALLOW_POST, "false")
-                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true"))
+                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true")
+                )
+                .addWelcomePage("index.html")
                 ;
 
         servletBuilder.setResourceManager(new ClassPathResourceManager(App.class.getClassLoader(), "webstatic"));

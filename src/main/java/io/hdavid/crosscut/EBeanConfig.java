@@ -14,7 +14,7 @@ public class EBeanConfig {
 
         DataSource ds = DbPool.getDs();
 
-        System.out.println("Init DB Migration");
+//        System.out.println("Init DB Migration");
         // run any pending migrations
         new MigrationRunner(new MigrationConfig()).run(ds); // begin/commits transaction for the migration...
 
@@ -25,13 +25,13 @@ public class EBeanConfig {
         config.setUseJtaTransactionManager(false);
         EbeanServerFactory.create(config);// used in multiple threads... no prob. trx are  managed in a thread local storage and or in the jta transaction registry.
 
-        User usuario = new QUser().username.eq("admin").findOne();
-        if (usuario == null) {
-            usuario = new User();
-            usuario.setUsername("admin");
-            usuario.setPassword("admin");
-            usuario.save();
-        }
+//        User usuario = new QUser().username.eq("admin").findOne();
+//        if (usuario == null) {
+//            usuario = new User();
+//            usuario.setUsername("admin");
+//            usuario.setPassword("admin");
+//            usuario.save();
+//        }
 
     }
 }
