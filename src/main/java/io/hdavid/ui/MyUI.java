@@ -14,19 +14,18 @@ import io.hdavid.crosscut.UserAccessControl;
 @Theme("custom")
 public class MyUI extends UI {
 
-    MainView mainView = null;
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-//        if (UserAccessControl.getCurrent() == null) {
-//            setContent(new LoginView(() -> {
-                mainView = new MainView();
-                setContent(mainView);
-//            }));
-//        } else {
-//            setContent(mainView);
-//        }
+        if (UserAccessControl.getCurrent() == null) {
+            setContent(new LoginView(() -> showMainView() ));
+        }
 
+    }
+
+    private void showMainView() {
+
+        setContent(new MainView());
     }
 
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)

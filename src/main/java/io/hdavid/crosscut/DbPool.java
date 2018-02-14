@@ -9,7 +9,7 @@ public class DbPool {
     private static volatile HikariDataSource ds;
     public static void configure() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:h2:c:/Users/hdavid/repos/jabe.h2db"); //jdbc:h2:[file:][<path>]<databaseName>
+        config.setJdbcUrl("jdbc:h2:jabe.h2db"); //jdbc:h2:[file:][<path>]<databaseName>
         config.setUsername("sa"); // systemadmin?
         config.setPassword("sa");
 //        config.addDataSourceProperty("", "");

@@ -34,7 +34,7 @@
           <groupId>com.fizzed</groupId>
           <artifactId>rocker-compiler</artifactId>
           <version>0.23.0</version>
-          <scope>provided</scope>
+          <!--<scope>provided</scope>-->
       </dependency>
 
       <dependency>
@@ -180,6 +180,20 @@
 
             </plugin>
 
+            <plugin>
+                <groupId>com.fizzed</groupId>
+                <artifactId>rocker-maven-plugin</artifactId>
+                <version>0.23.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-rocker-templates</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
