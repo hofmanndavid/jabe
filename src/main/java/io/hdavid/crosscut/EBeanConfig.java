@@ -5,7 +5,7 @@ import io.ebean.config.ServerConfig;
 import io.ebean.migration.MigrationConfig;
 import io.ebean.migration.MigrationRunner;
 import io.hdavid.entity.User;
-import io.hdavid.entity.query.QUser;
+//import io.hdavid.entity.query.QUser;
 import javax.sql.DataSource;
 
 public class EBeanConfig {

@@ -24,6 +24,15 @@
 
   <dependencies>
 
+      <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+          <version>1.7.25</version>
+          <!--<scope>test</scope>-->
+      </dependency>
+
+
       <dependency>
           <groupId>com.fizzed</groupId>
           <artifactId>rocker-runtime</artifactId>
@@ -180,43 +189,51 @@
 
             </plugin>
 
-            <plugin>
-                <groupId>com.fizzed</groupId>
-                <artifactId>rocker-maven-plugin</artifactId>
-                <version>0.23.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-rocker-templates</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.fizzed</groupId>-->
+                <!--<artifactId>rocker-maven-plugin</artifactId>-->
+                <!--<version>0.23.0</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>generate-rocker-templates</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--&lt;!&ndash;<configuration>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<javaVersion>${java.version}</javaVersion>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<templateDirectory>${basedir}/src/main/resources/rtemplates</templateDirectory>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<outputDirectory>${basedir}/target/generated-test-sources/rocker</outputDirectory>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<discardLogicWhitespace>false</discardLogicWhitespace>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<addAsTestSources>true</addAsTestSources>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<optimize>true</optimize>&ndash;&gt;-->
+                <!--&lt;!&ndash;</configuration>&ndash;&gt;-->
+            <!--</plugin>-->
 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>io.hdavid.App</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>install</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<mainClass>io.hdavid.App</mainClass>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                    <!--<descriptorRefs>-->
+                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                    <!--</descriptorRefs>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>make-assembly</id> &lt;!&ndash; this is used for inheritance merges &ndash;&gt;-->
+                        <!--<phase>install</phase> &lt;!&ndash; bind to the packaging phase &ndash;&gt;-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
 
             <!-- ebean configuration -->
