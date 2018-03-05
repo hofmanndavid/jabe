@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 
-//@Entity
+@Entity
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 public class User extends BasicEbeanEntity {
 
     public User(String username) {

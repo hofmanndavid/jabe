@@ -4,7 +4,6 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.*;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import lombok.SneakyThrows;
 import org.vaadin.teemusa.sidemenu.SideMenu;
@@ -20,6 +19,7 @@ public class MainView extends SideMenu {
         addMenuItemWithNavigation("Posts", PostsView.class);
         addMenuItemWithNavigation("Users", UsersView.class);
         addMenuItemWithNavigation("About", AboutView.class);
+        addMenuItemWithNavigation("TemplatesView", TemplatesView.class);
 
             Page.getCurrent().getUI().getNavigator().navigateTo(
                     Page.getCurrent().getUI().getNavigator().getState() != null ?

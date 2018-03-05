@@ -1,0 +1,19 @@
+
+elements for blog navigation/pages
+    - types of pages
+        index.html (simple statistics?)
+        all posts resume with statistics
+        rss
+        post
+        (later) paging list of posts
+        (later) spetial page, you write mustache and request type of dtos, can use mustache snippets from current template, can go to rss
+
+
+to render index
+    1 find template
+    2 run template with dto
+    3 serve html
+    4 serve template resources
+
+
+

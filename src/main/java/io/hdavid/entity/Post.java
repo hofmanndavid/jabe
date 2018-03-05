@@ -16,11 +16,17 @@ import java.time.LocalDateTime;
 public class Post extends BasicEbeanEntity {
 
     @Column(nullable = false)
-    private Timestamp lastUpdated;
-    private Timestamp publishedOn;
+    public String title;
+
     @Column(nullable = false)
-    private String article;
+    private String markdownArticle;
+
     @Column(nullable = false)
     private String url;
+
+    private Timestamp publishedOn;
+
+    @Column(nullable = false)
+    private Timestamp lastUpdated;
 
 }

@@ -23,6 +23,18 @@
   </properties>
 
   <dependencies>
+      <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.8.2</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.vaadin.addons</groupId>
+          <artifactId>aceeditor</artifactId>
+          <version>0.8.15</version>
+      </dependency>
 
       <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
       <dependency>
@@ -32,19 +44,6 @@
           <!--<scope>test</scope>-->
       </dependency>
 
-
-      <dependency>
-          <groupId>com.fizzed</groupId>
-          <artifactId>rocker-runtime</artifactId>
-          <version>0.23.0</version>
-      </dependency>
-      <!-- for hot-reloading support only during development, BUT we are going to use it in production? -->
-      <dependency>
-          <groupId>com.fizzed</groupId>
-          <artifactId>rocker-compiler</artifactId>
-          <version>0.23.0</version>
-          <!--<scope>provided</scope>-->
-      </dependency>
 
       <dependency>
           <groupId>com.zaxxer</groupId>
@@ -133,7 +132,9 @@
 
     <build>
         <finalName>jabe</finalName>
+
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -189,29 +190,7 @@
 
             </plugin>
 
-            <!--<plugin>-->
-                <!--<groupId>com.fizzed</groupId>-->
-                <!--<artifactId>rocker-maven-plugin</artifactId>-->
-                <!--<version>0.23.0</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>generate-rocker-templates</id>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--&lt;!&ndash;<configuration>&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;<javaVersion>${java.version}</javaVersion>&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;<templateDirectory>${basedir}/src/main/resources/rtemplates</templateDirectory>&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;<outputDirectory>${basedir}/target/generated-test-sources/rocker</outputDirectory>&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;<discardLogicWhitespace>false</discardLogicWhitespace>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<addAsTestSources>true</addAsTestSources>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<optimize>true</optimize>&ndash;&gt;-->
-                <!--&lt;!&ndash;</configuration>&ndash;&gt;-->
-            <!--</plugin>-->
-
+            <!-- this is to make an executable uber jar -->
             <!--<plugin>-->
                 <!--<artifactId>maven-assembly-plugin</artifactId>-->
                 <!--<configuration>-->
@@ -249,7 +228,7 @@
                 </configuration>
             </plugin>
 
-            <!-- here just to be able to see dependency sizes -->
+            <!-- here just to be able to see dependency sizes, any other way to do this? -->
             <!--<plugin>-->
                 <!--<groupId>org.apache.maven.plugins</groupId>-->
                 <!--<artifactId>maven-dependency-plugin</artifactId>-->

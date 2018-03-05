@@ -23,7 +23,7 @@ public class ServletConfig {
                 .setClassLoader(App.class.getClassLoader())
                 .setContextPath("/")
                 .setDeploymentName("jabe.war") // really need a name here?
-                .setDefaultSessionTimeout(60)
+                .setDefaultSessionTimeout(60*60)
                 .addServlets(
                         Servlets.servlet("VaadinUiServlet", MyUI.VaadinUiServlet.class)
 //                                .addInitParam("vaadin.production", "false") // anotated in MuUI.java

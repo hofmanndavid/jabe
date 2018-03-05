@@ -4,6 +4,7 @@ import com.vaadin.event.Action;
 import com.vaadin.ui.*;
 import io.hdavid.crosscut.UserAccessControl;
 import io.hdavid.entity.User;
+import io.hdavid.entity.query.QUser;
 import io.hdavid.util.Callback;
 
 import java.util.function.Consumer;
@@ -27,8 +28,10 @@ public class LoginView extends VerticalLayout {
                username.focus();
                return;
            }
-            UserAccessControl.setLoggedInUserForCurrentSession(new User("admin"));
-            onUserLogin.call();
+
+           UserAccessControl.setLoggedInUserForCurrentSession(new QUser().username.eq(username.getValue()).findOne());
+           onUserLogin.call();
+
 
         });
 

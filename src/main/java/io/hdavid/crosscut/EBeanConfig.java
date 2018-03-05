@@ -5,7 +5,7 @@ import io.ebean.config.ServerConfig;
 import io.ebean.migration.MigrationConfig;
 import io.ebean.migration.MigrationRunner;
 import io.hdavid.entity.User;
-//import io.hdavid.entity.query.QUser;
+import io.hdavid.entity.query.QUser;
 import javax.sql.DataSource;
 
 public class EBeanConfig {
@@ -24,14 +24,6 @@ public class EBeanConfig {
         config.addPackage(User.class.getPackage().getName());
         config.setUseJtaTransactionManager(false);
         EbeanServerFactory.create(config);// used in multiple threads... no prob. trx are  managed in a thread local storage and or in the jta transaction registry.
-
-//        User usuario = new QUser().username.eq("admin").findOne();
-//        if (usuario == null) {
-//            usuario = new User();
-//            usuario.setUsername("admin");
-//            usuario.setPassword("admin");
-//            usuario.save();
-//        }
 
     }
 }

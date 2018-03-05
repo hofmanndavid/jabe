@@ -6,6 +6,9 @@ import io.hdavid.entity.User;
 public class UserAccessControl {
 
     public static void setLoggedInUserForCurrentSession(User user) {
+        if (user == null)
+            throw new IllegalArgumentException();
+
         if (VaadinSession.getCurrent().getAttribute(User.class.getName())!= null)
             throw new RuntimeException("User already assigned.");
 
