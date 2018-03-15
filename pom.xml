@@ -20,10 +20,16 @@
       <vaadin.version>8.3.0</vaadin.version>
       <vaadin.plugin.version>8.3.0</vaadin.plugin.version>
       <vaadin.widgetset.mode>cdn</vaadin.widgetset.mode> <!-- cdn fetch local -->
+
   </properties>
 
   <dependencies>
-      <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>24.0-jre</version>
+      </dependency>
+
       <dependency>
           <groupId>com.google.code.gson</groupId>
           <artifactId>gson</artifactId>

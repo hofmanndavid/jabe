@@ -31,7 +31,7 @@ public class Template extends BasicEbeanEntity {
     private String postListTemplate;
     private String mustachePartialsJson;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<TemplateAsset> assetList;
 
     @Transient
