@@ -1,21 +1,13 @@
 package io.hdavid.ui.window;
 
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.components.grid.GridSelectionModel;
-import io.hdavid.entity.Post;
 import io.hdavid.entity.Template;
 import io.hdavid.entity.TemplateAsset;
-import io.hdavid.util.Callback;
 import io.hdavid.util.CommonWindow;
 import io.hdavid.util.DUpload;
-import lombok.AllArgsConstructor;
 import org.vaadin.aceeditor.AceEditor;
 import org.vaadin.aceeditor.AceMode;
 import org.vaadin.aceeditor.AceTheme;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static net.hdavid.easylayout.L.*;
 
@@ -25,6 +17,7 @@ public class TemplateEditorWindow extends CommonWindow {
     Grid<Template.MustacheTemplate> mustacheTemplates = new Grid<>("Mustaches");
     Button addPartial = new Button("Add Partial");
     Button removePartial = new Button("Remove Partial");
+    Button saveMustacheTemplate = new Button("Save mustache Template");
     TextField templateName = new TextField("Template Name");
     AceEditor editor = new AceEditor(); // https://github.com/ahn/vaadin-aceeditor
 
@@ -32,7 +25,6 @@ public class TemplateEditorWindow extends CommonWindow {
     DUpload uploadAsset = new DUpload("New Asset", this::newAssetAdded);
     Button removeAsset = new Button("Remove Asset");
 
-    final List<Template.MustacheTemplate> combinedMustacheTemplates;
     final Template template;
     private void newAssetAdded(String filename, String mime, byte[] content) {
         TemplateAsset ta = new TemplateAsset();
@@ -50,55 +42,63 @@ public class TemplateEditorWindow extends CommonWindow {
     public TemplateEditorWindow(Template _template) {
 
         this.template = _template;
-        combinedMustacheTemplates = template.getCombinedMustacheTemplates();
+
+
 
         mustacheTemplates.addColumn(mt->mt.name).setCaption("code");
-        mustacheTemplates.addColumn(mt->mt.partial).setCaption("partial");
-        mustacheTemplates.setItems(combinedMustacheTemplates);
+        mustacheTemplates.addColumn(mt->mt.kind.name()).setCaption("Kind");
+        mustacheTemplates.setItems(template.getMustacheTemplates());
         mustacheTemplates.setSelectionMode(Grid.SelectionMode.SINGLE);
         mustacheTemplates.addSelectionListener(sl->{
             boolean somethingSelected = !sl.getAllSelectedItems().isEmpty();
-            removePartial.setEnabled(false);
-            templateName.setEnabled(somethingSelected);
-            editor.setEnabled(somethingSelected);
-
             if (somethingSelected) {
                 Template.MustacheTemplate mt = sl.getFirstSelectedItem().get();
-                templateName.setEnabled(!mt.partial);
+                templateName.setEnabled(mt.kind == Template.MustacheTemplate.Kind.PARTIAL);
                 templateName.setValue(mt.name);
                 editor.setValue(mt.template);
-                removePartial.setEnabled(mt.partial);
+//                editor.setEnabled(true);
+                removePartial.setEnabled(mt.kind == Template.MustacheTemplate.Kind.PARTIAL);
+                saveMustacheTemplate.setEnabled(true);
+            } else {
+                removePartial.setEnabled(false);
+                templateName.setEnabled(false);
+                templateName.setValue("");
+                editor.setValue("");
+//                editor.setEnabled(false);
+
+                saveMustacheTemplate.setEnabled(false);
             }
+        });
+        saveMustacheTemplate.setEnabled(false);
+        saveMustacheTemplate.addClickListener(cl->{
+            Template.MustacheTemplate selected = mustacheTemplates.getSelectionModel().getFirstSelectedItem().get();
+            selected.name = templateName.getValue();
+            selected.template = editor.getValue();
+            template.markAsDirty();
+            template.save();
+            mustacheTemplates.setItems(template.getMustacheTemplates());
+            mustacheTemplates.getSelectionModel().select(selected);
         });
         addPartial.addClickListener(cl->{
             Template.MustacheTemplate nmt = new Template.MustacheTemplate(
-                    "newPartial"+(combinedMustacheTemplates.size()+1),
-                    true,
+                    "newPartial"+(template.getMustacheTemplates().size()+1),
+                    Template.MustacheTemplate.Kind.PARTIAL,
                     ""
             );
-            combinedMustacheTemplates.add(nmt);
-            mustacheTemplates.setItems(combinedMustacheTemplates);
-            template.setCombinedMustacheTemplates(combinedMustacheTemplates);
-            template.save();
+            template.getMustacheTemplates().add(nmt);
+            mustacheTemplates.setItems(template.getMustacheTemplates());
             mustacheTemplates.select(nmt);
         });
         removePartial.setEnabled(false);
         removePartial.addClickListener(cl->{
-            Template.MustacheTemplate mustacheTemplate = mustacheTemplates.getSelectedItems().stream().findFirst().get();
-            combinedMustacheTemplates.remove(mustacheTemplate);
-            template.setCombinedMustacheTemplates(combinedMustacheTemplates);
+            Template.MustacheTemplate mustacheTemplate = mustacheTemplates.getSelectionModel().getFirstSelectedItem().get();
+            template.getMustacheTemplates().remove(mustacheTemplate);
             template.save();
             mustacheTemplates.getSelectionModel().deselectAll();
         });
         templateName.setEnabled(false);
-        templateName.setValueChangeMode(ValueChangeMode.LAZY);
-        templateName.addValueChangeListener(vcl->{
-            Template.MustacheTemplate mustacheTemplate = mustacheTemplates.getSelectedItems().stream().findFirst().get();
-            mustacheTemplate.name = templateName.getValue();
-            template.setCombinedMustacheTemplates(combinedMustacheTemplates);
-            template.save();
-        });
-        editor.setEnabled(false);
+
+//        editor.setEnabled(false);
         editor.setMode(AceMode.handlebars);
         editor.setTheme(AceTheme.monokai);
         editor.setUseWorker(true); // Use worker (if available for the current mode)
@@ -109,13 +109,10 @@ public class TemplateEditorWindow extends CommonWindow {
         editor.setReadOnly(false);
         editor.setShowInvisibles(false);
         editor.setFontSize("18px");
-        editor.addValueChangeListener(vcl->{
-            Template.MustacheTemplate mustacheTemplate = mustacheTemplates.getSelectedItems().stream().findFirst().get();
-            mustacheTemplate.template = vcl.getValue();
-            template.setCombinedMustacheTemplates(combinedMustacheTemplates);
-            template.save();
-        });
 
+        assets.addColumn(a->a.getUrl()).setCaption("url");
+        assets.addColumn(a->a.getReadableFileSize()).setCaption("size");
+        assets.setItems(template.getAssetList());
         assets.addSelectionListener(sl->{
             removeAsset.setEnabled(!sl.getAllSelectedItems().isEmpty());
         });
@@ -129,14 +126,16 @@ public class TemplateEditorWindow extends CommonWindow {
             assets.getSelectionModel().deselectAll();
         });
 
+        mustacheTemplates.setHeight("300px");
+        assets.setHeight("300px");
         initAndShow("PostWindow",
                 ho(_FULL_SIZE, _MARGIN,
                         ve(mustacheTemplates,
                                 ho(removePartial,addPartial),
                                 assets,
                                 ho(removeAsset, uploadAsset)),
-                        ve(_FULL_SIZE,
-                                templateName,
+                        ve(_NOOP,_FULL_SIZE,
+                                ho(templateName, saveMustacheTemplate),
                                 editor, _FULL_SIZE,_EXPAND
                         ), _EXPAND)
         );

@@ -40,7 +40,7 @@ public class JarResources {
 	public static byte[] getResourceBytes(String resourcePath) {
 
 		try {
-			InputStream ras = JarResources.class.getClassLoader().getResourceAsStream(resourcePath);
+			InputStream ras = JarResources.class.getResourceAsStream(resourcePath);
 			byte[] bytes = ByteStreams.toByteArray(ras);
 
 			ras.close();
@@ -68,9 +68,13 @@ public class JarResources {
 		String[] resourcesOnFolder = new String(ByteStreams.toByteArray(JarResources.class.getResourceAsStream(path)), StandardCharsets.UTF_8).split("\n");
 		for (String name : resourcesOnFolder) {
 			if (xtlf.stream().anyMatch(x->name.endsWith(x))) {
-				fileName_content.put(name, asByteArray ?
-						getResourceBytes(path+path) :
-						getResourceAsString(path+name));
+				try {
+					fileName_content.put(name, asByteArray ?
+							getResourceBytes(path + name) :
+							getResourceAsString(path + name));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 

@@ -29,6 +29,9 @@ public abstract class BasicEbeanEntity {
     public void save() {
         Ebean.save(this);
     }
+    public void markAsDirty() {
+        Ebean.markAsDirty(this);
+    }
 
     public void delete() {
         Ebean.delete(this);

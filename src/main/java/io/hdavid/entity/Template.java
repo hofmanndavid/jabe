@@ -8,84 +8,53 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.lang.reflect.Type;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Getter
 @Setter
 public class Template extends BasicEbeanEntity {
 
+    @AllArgsConstructor
+    public static class MustacheTemplate {
+        public enum Kind {
+            WELCOME,POST,RSS,ATOM,POST_LIST,PARTIAL
+        }
+        public MustacheTemplate(Kind kind, String template) {
+            this(kind.name(), kind, template);
+        }
+        public String name;
+        public Kind kind;
+        public String template;
+        @Override public int hashCode() {
+            return name.hashCode();
+        }
+        @Override public boolean equals(Object obj) {
+            return name.equals(obj);
+        }
+    }
 
     @Column(nullable = false, unique = true)
     private String code;
 
-    private String welcomeTemplate;
-    private String postTemplate;
-    private String rssTemplate;
-    private String atomTemplate;
-    private String postListTemplate;
-    private String mustachePartialsJson;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<TemplateAsset> assetList;
 
+    @Column(length = 1024*1024)
+    private String jsonMustacheTemplates;
+
     @Transient
-    public Map<String, String> mustachePartials = new HashMap<>();
-
-    public List<MustacheTemplate> getCombinedMustacheTemplates() {
-        List<MustacheTemplate> mt = Arrays.asList(
-                new MustacheTemplate("welcome", false, welcomeTemplate),
-                new MustacheTemplate("atom", false, atomTemplate),
-                new MustacheTemplate("post", false, postTemplate),
-                new MustacheTemplate("rss", false, rssTemplate),
-                new MustacheTemplate("postList", false, postListTemplate));
-        mustachePartials.forEach((code, pt) -> mt.add(new MustacheTemplate(code, true, pt)));
-        return mt;
-    }
-    public void setCombinedMustacheTemplates(List<MustacheTemplate> mt) {
-        welcomeTemplate = mt.stream().filter(m->m.name.equals("welcome")).findFirst().get().template;
-        atomTemplate = mt.stream().filter(m->m.name.equals("atom")).findFirst().get().template;
-        postTemplate = mt.stream().filter(m->m.name.equals("post")).findFirst().get().template;
-        rssTemplate = mt.stream().filter(m->m.name.equals("rss")).findFirst().get().template;
-        postListTemplate = mt.stream().filter(m->m.name.equals("postList")).findFirst().get().template;
-
-        mustachePartials.clear();
-        mt.stream().filter(m->m.partial).forEach((m)->mustachePartials.put(m.name, m.template));
+    private List<MustacheTemplate> _mustacheTemplates;
+    @Transient
+    public List<MustacheTemplate> getMustacheTemplates() {
+        if (_mustacheTemplates == null)
+            _mustacheTemplates = new MustacheTemplateListConverter().convertToEntityAttribute(jsonMustacheTemplates);
+        return _mustacheTemplates;
     }
 
-    @PrePersist
-    @PreUpdate
-    private void syncToDb() {
-        setMustachePartialsJson(new GsonBuilder().disableHtmlEscaping().create().toJson(mustachePartials));
+    @PrePersist @PreUpdate
+    public void _syncToDb() {
+        setJsonMustacheTemplates(new MustacheTemplateListConverter().convertToDatabaseColumn(_mustacheTemplates));
     }
 
-    @PostLoad
-    private void syncFromDb() {
-        if (mustachePartialsJson!= null && mustachePartialsJson.isEmpty()) {
-            Type type = new TypeToken<Map<String, String>>(){}.getType();
-            mustachePartials = new GsonBuilder().disableHtmlEscaping().create().fromJson(mustachePartialsJson, type);
-        }
-    }
-
-    @AllArgsConstructor
-    public static class MustacheTemplate {
-        public String name;
-        public boolean partial;
-        public String template;
-
-        @Override
-        public int hashCode() {
-            return name.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return name.equals(obj);
-        }
-    }
 }
