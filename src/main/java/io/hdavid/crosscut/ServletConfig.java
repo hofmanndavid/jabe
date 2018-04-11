@@ -1,12 +1,10 @@
 package io.hdavid.crosscut;
 
 import io.hdavid.App;
-import io.hdavid.MessageServlet;
+import io.hdavid.blogservice.BlogServlet;
 import io.hdavid.ui.MyUI;
-import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
-import io.undertow.server.handlers.PathHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
@@ -30,16 +28,17 @@ public class ServletConfig {
                                 .setAsyncSupported(true)
                                 .addMapping("/admin/*")
                                 .addMapping("/VAADIN/*"),
-                        Servlets.servlet("MessageServlet", MessageServlet.class)
-                                .addInitParam("message", "Hello World")
-                                .addMapping("/sayhi"),
-                        Servlets.servlet("default", DefaultServlet.class)
-                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "false")
-                                .addInitParam(DefaultServlet.DEFAULT_ALLOWED, "true")
-                                .addInitParam(DefaultServlet.ALLOW_POST, "false")
-                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true")
+                        Servlets.servlet("BlogServlet", BlogServlet.class)
+//                                .addInitParam("", "")
+                                .addMapping("/*")
+//                        ,
+//                        Servlets.servlet("default", DefaultServlet.class)
+//                                .addInitParam(DefaultServlet.DIRECTORY_LISTING, "false")
+//                                .addInitParam(DefaultServlet.DEFAULT_ALLOWED, "true")
+//                                .addInitParam(DefaultServlet.ALLOW_POST, "false")
+//                                .addInitParam(DefaultServlet.RESOLVE_AGAINST_CONTEXT_ROOT, "true")
                 )
-                .addWelcomePage("index.html")
+//                .addWelcomePage("index.html")
                 ;
 
         servletBuilder.setResourceManager(new ClassPathResourceManager(App.class.getClassLoader(), "webstatic"));

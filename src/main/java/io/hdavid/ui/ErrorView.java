@@ -8,7 +8,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class ErrorView extends HorizontalLayout implements View {
 
     public ErrorView() {
-        Label label = new Label("Error page leka");
+        Label label = new Label("Error view not found");
         label.addStyleName(ValoTheme.LABEL_H1);
         addComponent(label);
     }

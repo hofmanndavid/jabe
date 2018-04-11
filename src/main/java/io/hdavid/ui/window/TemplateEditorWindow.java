@@ -43,8 +43,6 @@ public class TemplateEditorWindow extends CommonWindow {
 
         this.template = _template;
 
-
-
         mustacheTemplates.addColumn(mt->mt.name).setCaption("code");
         mustacheTemplates.addColumn(mt->mt.kind.name()).setCaption("Kind");
         mustacheTemplates.setItems(template.getMustacheTemplates());

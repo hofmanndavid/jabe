@@ -17,18 +17,34 @@ public class PostsView extends VerticalLayout implements View {
 
     Button newPost = new Button("New Post");
     Button modifyPost = new Button("Modify");
+    Button deleteButton = new Button("Delete");
 
     public PostsView() {
+        grid.addSelectionListener(sl->{
+            boolean somethingSelected = sl.getFirstSelectedItem().isPresent();
+            modifyPost.setEnabled(somethingSelected);
+            deleteButton.setEnabled(somethingSelected);
+        });
+
         newPost.addClickListener(cl->{
             Post post = new Post();
-            new PostEditorWindow(post, ()->loadPosts());
+            new PostEditorWindow(post, ()->{
+                loadPosts();
+                grid.getSelectionModel().select(post);
+            });
         });
 
         modifyPost.addClickListener(cl->{
             new PostEditorWindow(grid.getSelectionModel().getFirstSelectedItem().get(), ()->loadPosts());
         });
+        deleteButton.addClickListener(cl->{
+           grid.getSelectionModel().getFirstSelectedItem().get().delete();
+           loadPosts();
+           grid.getSelectionModel().deselectAll();
+        });
+        loadPosts();
         ve(this,_FULL_SIZE,_MARGIN,
-                ho(modifyPost, newPost, ValoTheme.BUTTON_PRIMARY), Alignment.MIDDLE_RIGHT,
+                ho(deleteButton, ValoTheme.BUTTON_DANGER, modifyPost, newPost, ValoTheme.BUTTON_PRIMARY), Alignment.MIDDLE_RIGHT,
                 grid, _FULL_SIZE, _EXPAND);
     }
 

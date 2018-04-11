@@ -1,4 +1,4 @@
-package io.hdavid;
+package io.hdavid.blogservice;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,10 +8,19 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-public class MessageServlet extends HttpServlet {
+public class BlogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().write(("Hello World !"+ new Date()).getBytes(StandardCharsets.US_ASCII));
+
+        BlogPage blogPage = null;
+        String uri = req.getRequestURI();
+        if (uri.equals("/")) {
+            blogPage = new WelcomePage();
+
+        }
+        blogPage.render(resp);
+
     }
+
 }
