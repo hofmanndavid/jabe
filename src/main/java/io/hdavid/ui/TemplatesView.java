@@ -3,7 +3,7 @@ package io.hdavid.ui;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import io.hdavid.entity.Template;
+import io.hdavid.todelete.Template;
 import io.hdavid.entity.query.QTemplate;
 import io.hdavid.ui.window.TemplateEditorWindow;
 

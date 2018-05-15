@@ -19,7 +19,7 @@
 
       <vaadin.version>8.3.0</vaadin.version>
       <vaadin.plugin.version>8.3.0</vaadin.plugin.version>
-      <vaadin.widgetset.mode>fetch</vaadin.widgetset.mode> <!-- cdn fetch local -->
+      <vaadin.widgetset.mode>cdn</vaadin.widgetset.mode> <!-- cdn fetch local -->
 
   </properties>
 
@@ -29,6 +29,7 @@
           <artifactId>jmustache</artifactId>
           <version>1.14</version>
       </dependency>
+
       <dependency>
           <groupId>com.atlassian.commonmark</groupId>
           <artifactId>commonmark</artifactId>
@@ -47,20 +48,22 @@
           <version>2.8.2</version>
       </dependency>
 
-      <dependency>
-          <groupId>org.vaadin.addons</groupId>
-          <artifactId>aceeditor</artifactId>
-          <version>0.8.15</version>
-      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>org.vaadin.addons</groupId>-->
+          <!--<artifactId>aceeditor</artifactId>-->
+          <!--<version>0.8.15</version>-->
+      <!--</dependency>-->
 
-      <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.7.25</version>
+      </dependency>
       <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-simple</artifactId>
           <version>1.7.25</version>
-          <!--<scope>test</scope>-->
       </dependency>
-
 
       <dependency>
           <groupId>com.zaxxer</groupId>
@@ -78,21 +81,21 @@
           <groupId>io.ebean</groupId>
           <artifactId>ebean</artifactId>
           <version>11.10.2</version>
-          <!--<exclusions>-->
-              <!--&lt;!&ndash; provided by application server, but required for testing :( and db migrations &ndash;&gt;-->
+          <exclusions>
+              <!-- provided by application server, but required for testing :( and db migrations -->
               <!--<exclusion>-->
                   <!--<groupId>org.slf4j</groupId>-->
                   <!--<artifactId>slf4j-api</artifactId>-->
               <!--</exclusion>-->
-              <!--<exclusion> &lt;!&ndash; already included in java ee api which is on compile/provided and test scope &ndash;&gt;-->
-                  <!--<groupId>javax.persistence</groupId>-->
-                  <!--<artifactId>persistence-api</artifactId>-->
-              <!--</exclusion>-->
+              <exclusion> <!-- already included in java ee api which is on compile/provided and test scope -->
+                  <groupId>javax.persistence</groupId>
+                  <artifactId>persistence-api</artifactId>
+              </exclusion>
               <!--<exclusion> &lt;!&ndash; not needed ...&ndash;&gt;-->
                   <!--<groupId>com.h2database</groupId>-->
                   <!--<artifactId>h2</artifactId>-->
               <!--</exclusion>-->
-          <!--</exclusions>-->
+          </exclusions>
       </dependency>
       <dependency>
           <groupId>io.ebean</groupId>

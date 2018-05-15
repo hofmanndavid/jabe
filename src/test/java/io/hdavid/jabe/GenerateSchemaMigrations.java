@@ -5,7 +5,6 @@ import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
 import io.ebean.dbmigration.DbMigration;
 import io.hdavid.crosscut.DbPool;
-import io.hdavid.entity.User;
 import lombok.SneakyThrows;
 
 import javax.sql.DataSource;

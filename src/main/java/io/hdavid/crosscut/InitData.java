@@ -1,13 +1,11 @@
 package io.hdavid.crosscut;
 
-import io.hdavid.entity.Template;
-import io.hdavid.entity.TemplateAsset;
-import io.hdavid.entity.User;
+import io.hdavid.todelete.Template;
+import io.hdavid.todelete.TemplateAsset;
 import io.hdavid.entity.query.QTemplate;
 import io.hdavid.entity.query.QUser;
 import io.hdavid.util.JarResources;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

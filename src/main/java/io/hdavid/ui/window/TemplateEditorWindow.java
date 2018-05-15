@@ -1,8 +1,8 @@
 package io.hdavid.ui.window;
 
 import com.vaadin.ui.*;
-import io.hdavid.entity.Template;
-import io.hdavid.entity.TemplateAsset;
+import io.hdavid.todelete.Template;
+import io.hdavid.todelete.TemplateAsset;
 import io.hdavid.util.CommonWindow;
 import io.hdavid.util.DUpload;
 import org.vaadin.aceeditor.AceEditor;

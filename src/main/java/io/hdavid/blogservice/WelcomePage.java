@@ -1,7 +1,7 @@
 package io.hdavid.blogservice;
 
 import io.hdavid.entity.Post;
-import io.hdavid.entity.Template;
+import io.hdavid.todelete.Template;
 import io.hdavid.entity.query.QPost;
 import io.hdavid.entity.query.QTemplate;
 

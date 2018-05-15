@@ -1,7 +1,6 @@
 package io.hdavid.crosscut;
 
 import com.vaadin.server.VaadinSession;
-import io.hdavid.entity.User;
 
 public class UserAccessControl {
 

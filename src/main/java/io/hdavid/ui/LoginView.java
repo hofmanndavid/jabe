@@ -1,13 +1,9 @@
 package io.hdavid.ui;
 
-import com.vaadin.event.Action;
 import com.vaadin.ui.*;
 import io.hdavid.crosscut.UserAccessControl;
-import io.hdavid.entity.User;
 import io.hdavid.entity.query.QUser;
 import io.hdavid.util.Callback;
-
-import java.util.function.Consumer;
 
 import static net.hdavid.easylayout.L.*;
 
